@@ -1,28 +1,19 @@
+/*
+ * code by christian torralba sophmore at PSU
+ * part of assignment two for cs201 systems programming
+ * The purpose of this program is to take a series of numbers as command line arguments,
+ * these numbers can range from 0-15
+ * we then set the bits of the each position in an integer
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 
+//defining size for each of use
 #define SHORT_SIZE sizeof(unsigned short) * 8
 
-
-int main(int argc, char** argv)
+void populateArray(int* array, char** argv, int argc)
 {
-
-	int arrSize = argc - 1;
-
-	if(arrSize <= 0)
-	{
-		printf("Please run again with proper command line arguments");
-		exit(EXIT_FAILURE);
-	}
-
-
-	unsigned short myShort = 0;
-
-	int positions[arrSize];	//array of positions
-	int bitPosition;		//the bit we are going to be manipulating
-
-
-	//putting command line arguments into positions array
 	for(int i = 0; i < argc; i++)
 	{
 		if(i + 1 < argc)
@@ -31,10 +22,31 @@ int main(int argc, char** argv)
 			if(argument < 0 || argument > 15)
 				exit(EXIT_FAILURE);
 			else
-				positions[i] = argument;
+				array[i] = argument;
 		}
+
+	}
+}	
+
+int main(int argc, char** argv)
+{
+
+	int arrSize = argc - 1;	//size of array, how many arguments - 1 for the a.out value
+	unsigned short myShort; //short we are going to be flipping the bits in
+
+//	int bitPosition;	//the bit position we are going to be manipulating
+
+	if(arrSize <= 0)	//if there were no arguments passed in
+	{
+		printf("Please run again with proper command line arguments");
+		exit(EXIT_FAILURE);
 	}
 
+	myShort = 0;
+
+	int positions[arrSize];	//array of positions
+
+	populateArray(positions, argv, argc);
 
 	//setting the bit
 	for(int i = 0; i < arrSize; ++i)
@@ -45,6 +57,19 @@ int main(int argc, char** argv)
 	for(int i = 0; i < arrSize; ++i)
 		printf("%d, ", positions[i]);
 	printf("\n\n");
+
+	int values[SHORT_SIZE] = {0};
+
+	for(int i = 0; i < SHORT_SIZE; ++i)
+	{
+		values[i] = (myShort >> i) & 1;	
+	}
+
+	for(int i = SHORT_SIZE-1; i > 0; --i)
+	{
+		printf("Values[%d]: %d\n", i, values[i]);
+	}
+	
 
 	//printing the unsigned short as a binary number
 	for(int i = 0; i < SHORT_SIZE; ++i)
