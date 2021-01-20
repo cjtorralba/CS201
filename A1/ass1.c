@@ -23,6 +23,9 @@ int main()
 	//starting one timer at the begining of the program
 	gettimeofday(&start, NULL);
 
+	//randominzing the seed for the shuffle function
+	srand(start.tv_usec);
+
 	printf("Please type the words EXACTLY how they appear, then press enter");
 
 
@@ -74,5 +77,5 @@ int main()
 	printf("Time: %f\n", remaining / 1000000);
 
 
-	return 0;
+	exit(EXIT_SUCCESS); 
 }

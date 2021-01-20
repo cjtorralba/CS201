@@ -16,8 +16,6 @@
 //using the fisher-yates shuffle
 void shuffle(char* arr[])
 {
-	srand(time(NULL));
-
 	//keeping a temp vaiable so we dont loose any elements
 	char* temp;
 
